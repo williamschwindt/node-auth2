@@ -13,11 +13,12 @@ function restrict(department) {
             }
 
             jwt.verify(token, process.env.JWT_SECRET, (err, decodedPayload) => {
-                if (err || decodedPayload.department !== department) {
+                if (err || decodedPayload.userDepartment !== department) {
                     return res.status(401).json(authError)
                 }
 
                 req.token = decodedPayload
+                next()
             })
 
         } catch(err) {
